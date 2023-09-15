@@ -1,0 +1,53 @@
+
+/* start -> end */
+/* @keyframes fadeToColor {
+    0% {
+      background-color: rgb(255, 255, 255);
+    }
+    100% {
+      background-color: rgb(138, 138, 138);
+    }
+  } */
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(40, 10px);
+    grid-template-rows: repeat(40,10px);
+    margin: 20px auto;
+    width: 500px;
+}
+
+  
+.cell {
+    width: 10px;
+    height: 10px;
+}
+  
+
+.cell:hover {
+    background-color: pink;
+}
+
+
+.alive {
+    background-color: rgb(255, 0, 221);
+    border: 1px solid rgb(232, 84, 213);
+}
+
+.almostDead{
+    background-color: aquamarine;
+}
+
+.almostAlive{
+    background-color: burlywood;
+}
+
+.cell.alive.almostAlive{
+    background-color: rgb(255, 0, 221) !important;
+    border: 1px solid rgb(232, 84, 213);
+}
+
+
+
+
+
