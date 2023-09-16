@@ -5,9 +5,9 @@ const randButton = document.getElementById("randButton")
 const clearButton = document.getElementById("clearButton")
 const gggButton = document.getElementById("gggButton")
 
-const amtRow = 40;
-const amtCol = 40;
-const amtTimeRefresh = 1;
+const amtRow = 36;
+const amtCol = 36;
+const amtTimeRefresh = .5;
 const chanceOfRand = .15
 let randState = false;
 
@@ -25,41 +25,42 @@ const findAmtNeighbors = (cell) => {
     const row = parseInt(cell.dataset.row);
     const col = parseInt(cell.dataset.col);
 
-    // Initialize a variable to count the number of alive neighbors
+    // initialize a variable to count the number of alive neighbors
     let neighbors = 0;
 
-    // Iterate through a 3x3 grid centered around the current cell
+    // iterate through a 3x3 grid centered around the current cell
     for (let r = -1; r <= 1; r++) {
         for (let c = -1; c <= 1; c++) {
-            // When r and c are both 0, it's the current cell itself, so we skip it
+            // when r and c are both 0, it's the current cell itself, so we skip it
             if (r === 0 && c === 0) {
                 continue;
             }
-            // Calculate the coordinates of a potential neighbor cell
+            // calculate the coordinates of a potential neighbor cell
             const newRow = row + r;
             const newCol = col + c;
 
-            // Check if the potential neighbor cell is within the grid boundaries
+            // check if potential neighbor cell is within the grid boundaries
             if ( newRow >= 0 && 
                 newRow < amtRow &&
                 newCol >= 0 && 
                 newCol < amtCol ) {
-                // Find the neighbor cell in the DOM using its data attributes
+                // find the neighbor cell in the DOM using its data attributes
                 const neighborCell = document.querySelector(
                     `[data-row="${newRow}"][data-col="${newCol}"]`
                 );
-                // Check if the neighbor cell is alive (contains the "alive" class)
+                // check if the neighbor cell is alive (contains the "alive" class)
                 if (neighborCell.classList.contains("alive")) {
-                    // If the neighbor cell is alive, increment the neighbors count
+                    // If a neighbor cell is alive, increment the neighbors count
                     neighbors++;
                 }
             }
         }
     }
-    // Return the total count of alive neighbors for the current cell
+    // return the total count of alive neighbors for the current cell
     return neighbors;
 };
 
+// for an individual cell, find surrounding neighbors, determine will be alive or dead
 const deadOrAlive =(cell)=>{
     const neighbors = findAmtNeighbors(cell)
     if(cell.classList.contains("alive")){
@@ -72,7 +73,7 @@ const deadOrAlive =(cell)=>{
         }
     }
 }
-
+// make each cell and assign a coordinate 
 const makeBoard = () => {
     for(let row = 0; row < amtRow; row++){
         for(let col = 0; col <amtCol; col++){
@@ -81,6 +82,8 @@ const makeBoard = () => {
             cell.dataset.row = row;
             cell.className = "cell";
             cell.addEventListener("click", toggle)
+
+            // allows for random placement on next board
             if(randState){
                 let n = Math.random()
                 if(n<chanceOfRand){
@@ -92,19 +95,21 @@ const makeBoard = () => {
     }
 }
 
-const startGame = () =>{
-    gameRunning = true;
-    IntervalId = setInterval(updateGame, amtTimeRefresh);
-    console.log("game start")
+const startGame = () => {
+    if (!gameRunning) {
+        IntervalId = setInterval(updateGame, amtTimeRefresh);
+        gameRunning = true;
+    }
 }
 
 const stopGame = () => {
     console.log("Stopping the game");
-    gameRunning = false;
     clearInterval(IntervalId);
+    gameRunning = false;
 };
 
 
+//run through each cell and determine and assign what theyll be on next refresh
 const stageCellState = () =>{
     const cells = document.querySelectorAll(".cell");
     cells.forEach(cell => {
@@ -112,10 +117,11 @@ const stageCellState = () =>{
     });
 
 }
+//solidy next fram state of all cells based on "almostAlive" or "almostDead"
 const makeAliveOrDead = () => {
     const cells = document.querySelectorAll(".cell");
     
-    // Create two arrays to store the cells to be updated for alive and dead
+    // arrays to store the cells to be updated for alive and dead
     const cellsToBeAlive = [];
     const cellsToBeDead = [];
 
@@ -127,7 +133,7 @@ const makeAliveOrDead = () => {
         }
     });
 
-    // Now, update the state of the cells
+    // update the state of the cells
     cellsToBeAlive.forEach(cell => {
         cell.classList.add("alive");
         cell.classList.remove("almostAlive");
@@ -143,17 +149,16 @@ const makeAliveOrDead = () => {
     stageCellState();
 }
 
-const randPlacement = () => {
-    randState = true;
-
-    // Clear the existing grid by removing all child elements
+const clearBoard = () =>{
     while (board.firstChild) {
         board.removeChild(board.firstChild);
     }
-
-    // Create a new randomized grid
     makeBoard();
+}
 
+const randPlacement = () => {
+    randState = true;
+    clearBoard();
     randState = false;
 }
 
@@ -178,8 +183,6 @@ const spawnGosperGliderGun = () => {
     });
 };
 
-// You can call this function to spawn the modified Gosper glider gun.
-
 const updateGame = () => {
     // Iterate through all cells and update their state based on neighbors and save value in almost alive
     // Then run through cells again, and enforce changes after value are all stored.
@@ -190,6 +193,6 @@ gggButton.addEventListener("click", spawnGosperGliderGun)
 randButton.addEventListener("click", randPlacement)
 startButton.addEventListener("click", startGame)
 stopButton.addEventListener("click", stopGame)
-clearButton.addEventListener("click", () => location.reload())
+clearButton.addEventListener("click", clearBoard)
 
 makeBoard();

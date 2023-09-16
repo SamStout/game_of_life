@@ -1,53 +1,96 @@
 
-/* start -> end */
-/* @keyframes fadeToColor {
-    0% {
-      background-color: rgb(255, 255, 255);
-    }
-    100% {
-      background-color: rgb(138, 138, 138);
-    }
-  } */
+*{
+    font-family: "Roboto Mono", monospace;
+}
 
-.grid{
+:root {
+    --primary-color: #5465ff;
+    --secondary-color: #788bff;
+    --third-color:#9bb1ff;
+    --fourth-color:#bfd7ff;
+    --fifth-color:#e2fdff;
+    --alive: #ff58fc;
+    --almost-dead: #ff9f1c;
+    --almost-alive:#00f5d4;
+    --border-color: black;
+}
+
+body, h1 {
+    background-color: var(--fifth-color);
+}
+
+header {
+    background-color: var(--fifth-color);
+    color: black;
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+#controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #b8b8b8;
+}
+
+.grid {
     display: grid;
-    grid-template-columns: repeat(40, 10px);
-    grid-template-rows: repeat(40,10px);
-    margin: 20px auto;
-    width: 500px;
+    grid-template-columns: repeat(36, 15px);
+    grid-template-rows: repeat(36, 15px);
+    margin: 0 auto;
+    width: 540px;
+    border: 1px solid black;
 }
 
-  
 .cell {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
 }
-  
 
 .cell:hover {
     background-color: pink;
 }
 
-
 .alive {
-    background-color: rgb(255, 0, 221);
-    border: 1px solid rgb(232, 84, 213);
+    background-color: var(--alive);
+    border: 1px solid var(--border-color);
 }
 
-.almostDead{
-    background-color: aquamarine;
+.almostDead {
+    background-color: var(--almost-dead);
+    border: 1px solid var(--border-color);
 }
 
-.almostAlive{
-    background-color: burlywood;
+.almostAlive {
+    background-color: var(--almost-alive);
+    border: 1px solid var(--border-color);
+
 }
 
-.cell.alive.almostAlive{
-    background-color: rgb(255, 0, 221) !important;
-    border: 1px solid rgb(232, 84, 213);
+.cell.alive.almostAlive {
+    background-color: fcefef(255, 0, 221) !important;
+    border: 1px solid var(--border-color);
 }
 
-
-
+code, pre {
+    font-family: "Roboto Mono", monospace;
+}
 
 
