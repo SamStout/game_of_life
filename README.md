@@ -30,7 +30,7 @@ Any dead cell with exactly three live neighbors becomes a live cell (reproductio
 Customize the Simulation
 You can customize the simulation by adjusting the following parameters in the script.js file:
 
-amtRow and amtCol: Control the number of rows and columns in the grid.
+amtRow and amtCol: Control the number of rows and columns in the grid. Keep in mind the more rows and columns that are added will signficantly influence the refresh time. If you choose to change the amt col and amt row, make a corresponding change in the CSS under the grid-template-columns and grid-template-rows.
 amtTimeRefresh: Sets the time interval between generations (in seconds).
 chanceOfRand: Controls the likelihood of randomly populating cells when using the "Randomize" button.
 Feel free to explore the code and make modifications as desired.
